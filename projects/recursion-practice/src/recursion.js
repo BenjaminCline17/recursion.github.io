@@ -68,11 +68,18 @@ if (n < 0) {
 
 // 6. Get the integers in range (x, y).
 // Example:  range(2, 9);  // [3, 4, 5, 6, 7, 8]
-var range = function(x, y) {
+var range = function(x, y,) {
   //base
-
+if (x >= y-1){
+return [];
+}
+if (x >= y){
+  return [x]
+}
   //recursion
-  
+let output = range(x, y - 1)
+output.push(y-1);
+return output;
 };
 
 // 7. Compute the exponent of a number.

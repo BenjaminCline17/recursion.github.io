@@ -94,7 +94,27 @@ if (x > y+1) {
 // 8^2 = 8 x 8 = 64.  Here, 8 is the base and 2 is the exponent.
 // Example:  exponent(4,3);  // 64
 // https://www.khanacademy.org/computing/computer-science/algorithms/recursive-algorithms/a/computing-powers-of-a-number
+/*
+I: function takes in base number and exponent
+O: return the exponent of a number
+C:N/A
+E:N/A
+*/
 var exponent = function(base, exp) {
+  //base
+  //if exp equals 0, return 1
+if(exp === 0){
+return 1;
+}//if exp equals 1, return base
+if(exp === 1) {
+  return base;
+}//if exp is less than 0, divide 1 by (base ** -exp) 
+if(exp < 0) {
+return 1 / (base ** -exp);
+}
+  //recursion
+  //return base times exponent(base, exp - 1)
+return base * exponent(base, exp - 1);
 };
 
 // 8. Determine if a number is a power of two.
@@ -102,6 +122,18 @@ var exponent = function(base, exp) {
 // powerOfTwo(16); // true
 // powerOfTwo(10); // false
 var powerOfTwo = function(n) {
+  //base
+if (n === 0){
+return false;
+}
+if (n === 1){
+  return true;
+}
+if(!n / 2){
+  return false;
+}
+  //recursion
+  return powerOfTwo(n / 2);
 };
 
 // 9. Write a function that accepts a string a reverses it.

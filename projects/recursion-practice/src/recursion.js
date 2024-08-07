@@ -138,14 +138,34 @@ if(!n / 2){
 
 // 9. Write a function that accepts a string a reverses it.
 var reverse = function(string) {
+  //base
+if(string === "") {
+return "";
+}
+  //recursion
+  return reverse(string.substr(1)) + string.charAt(0);
 };
 
 // 10. Write a function that determines if a string is a palindrome.
 var palindrome = function(string) {
+  //base
+if (string.length === 1) {
+  return true;
+}
+if (string.length === 1) {
+  return string[0] === string[1];
+}
+  //recursion
+  string = string.replace(/\s*/g, "");
+
+if (string[0].toLowerCase() === string.slice(-1).toLowerCase()) {
+  return palindrome(string.slice(1, -1));
+}
+return false;
 };
 
 // 11. Write a function that returns the remainder of x divided by y without using the
-// modulo (%) operator.
+// modulo (%) operator. Optional
 // modulo(5,2) // 1
 // modulo(17,5) // 2
 // modulo(22,6) // 4
@@ -156,15 +176,26 @@ var modulo = function(x, y) {
 // JavaScript's Math object.
 // ATTENTION DO NOT LEAVE COMMENTS IN THIS FUNCTION. The test is looking for any ('/').
 var multiply = function(x, y) {
+if (x < y) {
+  return multiply(y, x);
+} else if(y < 0) {
+return -multiply(x, -y);
+} 
+else if (y != 0) {
+  return x + multiply(x, y -1)
+} else {
+  return 0;
+}
 };
 
+
 // 13. Write a function that divides two numbers without using the / operator  or
-// JavaScript's Math object.
+// JavaScript's Math object. Optional
 var divide = function(x, y) {
 };
 
 // 14. Find the greatest common divisor (gcd) of two positive numbers.  The GCD of two
-// integers is the greatest integer that divides both x and y with no remainder.
+// integers is the greatest integer that divides both x and y with no remainder. Optional
 // Example:  gcd(4,36);  // 4
 // http://www.cse.wustl.edu/~kjg/cse131/Notes/Recursion/recursion.html
 // https://www.khanacademy.org/computing/computer-science/cryptography/modarithmetic/a/the-euclidean-algorithm

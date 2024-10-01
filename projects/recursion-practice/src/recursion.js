@@ -59,16 +59,30 @@ if (n === 1){
 // sumBelow(7); // 21
 var sumBelow = function(n) {
   //base
-
+  //if n equals 0, return n
+if (n === 0){
+  return n;
+}
   //recursion
-  
+  //if n is greater than 0, add the the integers below n
+  if (n > 0){
+  return n - 1 + sumBelow(n - 1);
+  } else { //else, add the integers above n
+    return n + 1 + sumBelow(n + 1);
+  }
 };
 
 // 6. Get the integers in range (x, y).
 // Example:  range(2, 9);  // [3, 4, 5, 6, 7, 8]
 var range = function(x, y, output=[]) {
   //base
+  if (x === y){
+    return [];
+  }
   if (x === y - 1){
+    return output;
+  }
+  if (x - 1 === y){
     return output;
   }
   //recursion
@@ -81,11 +95,6 @@ return range(x + 1, y, output)
     
     return range(x - 1, y, output);
   }
-
-
-
-
-
 };
 
 // 7. Compute the exponent of a number.
@@ -94,6 +103,21 @@ return range(x + 1, y, output)
 // Example:  exponent(4,3);  // 64
 // https://www.khanacademy.org/computing/computer-science/algorithms/recursive-algorithms/a/computing-powers-of-a-number
 var exponent = function(base, exp) {
+  //base
+  //if exp is 0, return 1
+  if (exp === 0){
+    return 1;
+  }
+  //if exp is 1, return base
+  if (exp === 1){
+    return base;
+  }
+  //recursion
+  //if exp is less than 0, return 1 divided by the exponent function with base and negative exp passed in
+  if (exp < 0){
+    return 1/exponent(base, -exp);
+  }
+    return base * exponent(base, exp -1);
 };
 
 // 8. Determine if a number is a power of two.
@@ -101,10 +125,32 @@ var exponent = function(base, exp) {
 // powerOfTwo(16); // true
 // powerOfTwo(10); // false
 var powerOfTwo = function(n) {
+  //base
+  //if n is less than or equal to 0, return false
+  if (n <= 0) {
+    return false;
+  } //if n is equal to 1, return true
+  if (n === 1) {
+    return true;
+  }
+  //recursion
+  //if the remainder of n and 2 is 0, return powerOfTwo function with n divided by 2 passed in
+  if (n % 2 === 0){
+    return powerOfTwo(n / 2);
+  }
+  return false; //return false
 };
 
 // 9. Write a function that accepts a string a reverses it.
 var reverse = function(string) {
+  //base
+  //if string is empty, return an empty string
+  if (string === ""){
+    return "";
+  }
+  //recursion
+  //return the reverse function with a substring of string passed added to the first character of string
+  return reverse(string.substr(1)) + string.charAt(0);
 };
 
 // 10. Write a function that determines if a string is a palindrome.
@@ -204,7 +250,18 @@ var fibonacci = function(n) {
 // nthFibo(5); // 5
 // nthFibo(7); // 13
 // nthFibo(3); // 2
-var nthFibo = function(n) {
+var nthFibo = function(n, fib=[0, 1]) {
+  //base
+  if (n < 0){
+    return null;
+  }
+ if (fib.length > n){
+  return fib[n];
+ }
+  //recursion
+ fib.push(fib[fib.length - 1] + fib[fib.length - 2]);
+
+ return nthFibo(n, fib);
 };
 
 // 26. Given an array of words, return a new array containing each word capitalized.

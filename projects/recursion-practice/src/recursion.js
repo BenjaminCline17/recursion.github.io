@@ -195,12 +195,12 @@ if (y < 0){
  return x + multiply(x, y - 1);
 };
 
-// 13. Write a function that divides two numbers without using the / operator  or
+// 13. Write a function that divides two numbers without using the / operator  or / Optional
 // JavaScript's Math object.
 var divide = function(x, y) {
 };
 
-// 14. Find the greatest common divisor (gcd) of two positive numbers.  The GCD of two
+// 14. Find the greatest common divisor (gcd) of two positive numbers.  The GCD of two / Optional
 // integers is the greatest integer that divides both x and y with no remainder.
 // Example:  gcd(4,36);  // 4
 // http://www.cse.wustl.edu/~kjg/cse131/Notes/Recursion/recursion.html
@@ -214,54 +214,102 @@ var gcd = function(x, y) {
 // compareStr('', '') // true
 // compareStr('tomato', 'tomato') // true
 var compareStr = function(str1, str2) {
+  //base
+  if(str1 === str2){
+    return true;
+  }
+  if(str1.length === 0 || str2.length === 0){
+    return false;
+  }
+  //recursion
+  if (str1[0] === str2[0]){
+    return compareStr(str1.slice(1), str2.slice(1));
+  } else {
+    return false;
+  }
+
 };
 
 // 16. Write a function that accepts a string and creates an array where each letter
 // occupies an index of the array.
 var createArray = function(str){
+  //base
+  if (str.length === 0){
+    return [];
+  }
+  //recursion
+  return [str[0]].concat(createArray(str.slice(1)));
 };
 
 // 17. Reverse the order of an array
 var reverseArr = function (array) {
+  //base
+  if (!array.length){
+    return array;
+  }
+  //recursion
+  return reverseArr(array.slice(1)).concat(array[0]);
 };
 
 // 18. Create a new array with a given value and length.
 // buildList(0,5) // [0,0,0,0,0]
 // buildList(7,3) // [7,7,7]
 var buildList = function(value, length) {
+  //base
+  if (length <= 0){
+    return [];
+  }
+  //recursion
+    return [value].concat(buildList(value, length - 1));
 };
 
 // 19. Count the occurence of a value inside a list.
 // countOccurrence([2,7,4,4,1,4], 4) // 3
 // countOccurrence([2,'banana',4,4,1,'banana'], 'banana') // 2
 var countOccurrence = function(array, value) {
+  //base
+  if (array.length === 0){
+    return 0;
+  }
+  //recursion
+  return (array[0] === value) + countOccurrence(array.slice(1), value);
 };
 
 // 20. Write a recursive version of map.
 // rMap([1,2,3], timesTwo); // [2,4,6]
-var rMap = function(array, callback) {
+var rMap = function(array, callback, newArray = []) {
+  //base
+  if(array.length <= 0){
+    return newArray;
+  }
+  const [item, ...theRest] = array;
+
+
+  const interimArray = [...newArray, callback(item)];
+  //recursion
+  return rMap(theRest, callback, interimArray);
 };
 
-// 21. Write a function that counts the number of times a key occurs in an object.
+// 21. Write a function that counts the number of times a key occurs in an object. Optional
 // var testobj = {'e': {'x':'y'}, 't':{'r': {'e':'r'}, 'p': {'y':'r'}},'y':'e'};
 // countKeysInObj(testobj, 'r') // 1
 // countKeysInObj(testobj, 'e') // 2
 var countKeysInObj = function(obj, key) {
 };
 
-// 22. Write a function that counts the number of times a value occurs in an object.
+// 22. Write a function that counts the number of times a value occurs in an object. Optional
 // var testobj = {'e': {'x':'y'}, 't':{'r': {'e':'r'}, 'p': {'y':'r'}},'y':'e'};
 // countValuesInObj(testobj, 'r') // 2
 // countValuesInObj(testobj, 'e') // 1
 var countValuesInObj = function(obj, value) {
 };
 
-// 23. Find all keys in an object (and nested objects) by a provided name and rename
+// 23. Find all keys in an object (and nested objects) by a provided name and rename Optional
 // them to a provided new name while preserving the value stored at that key.
 var replaceKeysInObj = function(obj, key, newKey) {
 };
 
-// 24. Get the first n Fibonacci numbers.  In the Fibonacci Sequence, each subsequent
+// 24. Get the first n Fibonacci numbers.  In the Fibonacci Sequence, each subsequent Optional
 // number is the sum of the previous two.
 // Example:  0, 1, 1, 2, 3, 5, 8, 13, 21, 34.....
 // fibonacci(5);  // [0, 1, 1, 2, 3, 5]

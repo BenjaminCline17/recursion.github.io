@@ -340,14 +340,33 @@ var nthFibo = function(n, fib=[0, 1]) {
 // var words = ['i', 'am', 'learning', 'recursion'];
 // capitalizedWords(words); // ['I', 'AM', 'LEARNING', 'RECURSION']
 var capitalizeWords = function(input) {
+  //base
+  //if the input length is 1, return the first element of input being capitalized
+ if(input.length === 1){
+  return [input[0].toUpperCase()];
+ }
+  //recursion
+  // let result equal a slice of the input array
+ let result = capitalizeWords(input.slice(0, -1));
+ //push the capitalized slice into the result
+ result.push(input.slice(input.length -1)[0].toUpperCase());
+ //return result
+ return result;
 };
 
 // 27. Given an array of strings, capitalize the first letter of each index.
 // capitalizeFirst(['car', 'poop', 'banana']); // ['Car', 'Poop', 'Banana']
-var capitalizeFirst = function(array) {
+var capitalizeFirst = function(array, index= 0) {
+  //base
+  if(index >= array.length){
+    return array;
+  }
+  array[index] = array[index].charAt(0).toUpperCase() + array[index].slice(1);
+  //recursion
+  return capitalizeFirst(array, index + 1);
 };
 
-// 28. Return the sum of all even numbers in an object containing nested objects.
+// 28. Return the sum of all even numbers in an object containing nested objects. Optional
 // var obj1 = {
 //   a: 2,
 //   b: {b: 2, bb: {b: 3, bb: {b: 2}}},
@@ -359,14 +378,26 @@ var capitalizeFirst = function(array) {
 var nestedEvenSum = function(obj) {
 };
 
-// 29. Flatten an array containing nested arrays.
+// 29. Flatten an array containing nested arrays. Optional
 // Example: flatten([1,[2],[3,[[4]]],5]); // [1,2,3,4,5]
 var flatten = function(arrays) {
 };
 
 // 30. Given a string, return an object containing tallies of each letter.
 // letterTally('potato'); // {'p':1, 'o':2, 't':2, 'a':1}
-var letterTally = function(str, obj) {
+var letterTally = function(str, obj = {}) {
+  //base
+  if (str.length === 0){
+    return obj;
+  }
+  //recursion
+ letterTally(str.substr(1), obj)
+ if (obj[str[0]] === undefined){
+  obj[str[0]] = 1;
+ } else {
+  obj[str[0]] += 1;
+ }
+return obj;
 };
 
 // 31. Eliminate consecutive duplicates in a list.  If the list contains repeated
@@ -374,10 +405,23 @@ var letterTally = function(str, obj) {
 // elements should not be changed.
 // Example: compress([1, 2, 2, 3, 4, 4, 5, 5, 5]) // [1, 2, 3, 4, 5]
 // Example: compress([1, 2, 2, 3, 4, 4, 2, 5, 5, 5, 4, 4]) // [1, 2, 3, 4, 2, 5, 4]
-var compress = function(list) {
+var compress = function(list, output = []) {
+  //base
+ if (list.length === 0){
+    return output;
+ }
+ if (list.length === 1){
+  output.push(list[0]);
+  return output;
+ }
+ if (list[0] !== list[1]){
+  output.push(list[0])
+ }
+  //recursion
+  return compress(list.slice(1), output);
 };
 
-// 32. Augment every element in a list with a new value where each element is an array
+// 32. Augment every element in a list with a new value where each element is an array Optional
 // itself.
 // Example: augmentElements([[],[3],[7]], 5); // [[5],[3,5],[7,5]]
 var augmentElements = function(array, aug) {
@@ -387,19 +431,86 @@ var augmentElements = function(array, aug) {
 // minimizeZeroes([2,0,0,0,1,4]) // [2,0,1,4]
 // minimizeZeroes([2,0,0,0,1,0,0,4]) // [2,0,1,0,4]
 var minimizeZeroes = function(array) {
+  //base
+if (array.length === 0){
+  return [];
+}
+  //recursion
+  if (array[0] === 0 && array[1] === 0){
+    return minimizeZeroes(array.slice(1));
+  } else {
+    return [array[0], ...minimizeZeroes(array.slice(1))];
+  }
 };
 
 // 34. Alternate the numbers in an array between positive and negative regardless of
 // their original sign.  The first number in the index always needs to be positive.
 // alternateSign([2,7,8,3,1,4]) // [2,-7,8,-3,1,-4]
 // alternateSign([-2,-7,8,3,-1,4]) // [2,-7,8,-3,1,-4]
-var alternateSign = function(array) {
+var alternateSign = function(array, index = 0) {
+ //base
+ //if the current index is greater than array, return the whole array
+  if (index >= array.length){
+    return array;
+  }
+  //if the current element is positive and the index is even, keep the current element positive
+  if (array[index] > 0 && index % 2 === 0) {
+    array[index] *= 1;
+    //if the current element is negative and the index is even, multiply the current by a negative to make it positive
+  } else if (array[index] < 0 && index % 2 === 0){
+    array[index] *= -1
+    //if the current element is positive and the index is odd, set the current element to negative
+  } else if (array[index] > 0 && index % 2 === 1){
+    array[index] *= -1
+  } else { //else keep the current element negative
+    array[index] *= 1;
+  }
+  
+ //recursion
+ //return the alternateSign function while iterating through the array
+return alternateSign(array, index + 1);
 };
 
 // 35. Given a string, return a string with digits converted to their word equivalent.
 // Assume all numbers are single digits (less than 10).
 // numToText("I have 5 dogs and 6 ponies"); // "I have five dogs and six ponies"
 var numToText = function(str) {
+ //base
+ //if str.length equals 0, return an empty string
+  if (str.length === 0){
+    return "";
+  }
+
+  //recursion
+  //declare tempStr as the numToText with a substring of str passed in
+  let tempStr = numToText(str.substr(0, str.length -1));
+  //declare replace
+  let replace;
+  //use the switch statement to replace any number in the input string with its word equivalent 
+  switch(str[str.length - 1]) {
+    case "1": replace = "one";
+    break;
+    case "2": replace = "two";
+    break;
+    case "3": replace = "three";
+    break;
+    case "4": replace = "four";
+    break;
+    case "5": replace = "five";
+    break;
+    case "6": replace = "six";
+    break;
+    case "7": replace = "seven";
+    break;
+    case "8": replace = "eight";
+    break;
+    case "9": replace = "nine";
+    break;
+    default: replace = str[str.length-1];
+    break;
+  }
+  //return the result of changing anything numbers in the input string.
+  return tempStr + replace;
 };
 
 // *** EXTRA CREDIT ***
